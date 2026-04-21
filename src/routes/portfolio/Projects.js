@@ -1,7 +1,6 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import ExternalLink from "../../assets/images/project-external.png";
-import GithubRepo from "../../assets/images/project-source.png";
 import { projectsData } from "../../data/projectsData";
 
 const Projects = () => {

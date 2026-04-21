@@ -15,7 +15,7 @@ const CollapsibleText = (inputJson) => {
             "I am based out of" ,
             { 
                 trigger: "NYC",
-                collapse: ["near Fidi Area"]
+                collapse: ["near Hudson Yards"]
             },
             "where I am a" ,
             {

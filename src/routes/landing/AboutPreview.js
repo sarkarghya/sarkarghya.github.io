@@ -1,5 +1,4 @@
 import AboutMe from "../about/AboutMe.js";
-import Stack from "../about/Stack.js";
 import { React } from 'react';
 
 const AboutPreview = () => {

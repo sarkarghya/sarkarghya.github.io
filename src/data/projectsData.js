@@ -1,6 +1,3 @@
-import urlShortener from "../assets/images/portfolio/urlShortener.png";
-import RestCountries from "../assets/images/portfolio/RestCountries.jpeg";
-import Bankist from "../assets/images/portfolio/Bankist.jpeg";
 import Canvas from "../assets/images/portfolio/Canvas.png";
 import MDP1 from "../assets/images/portfolio/MDP1.png";
 import Notebook from "../assets/images/portfolio/Notebook.png";

@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
-import React,  { useState, useEffect, useRef } from 'react';
+import React,  { useState, useEffect } from 'react';
 import { TypeAnimation } from 'react-type-animation';
-import HTMLToJSON from './HtoJ.js';
 import CollapsibleText from "./CollapsibleText.js";
 // import FadeInText from './FadeInText.js';
 

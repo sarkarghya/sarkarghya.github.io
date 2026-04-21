@@ -1,25 +1,20 @@
 {
   "files": {
     "main.css": "/static/css/main.ad2572f6.css",
-    "main.js": "/static/js/main.c995d3e7.js",
-    "static/js/453.41811d64.chunk.js": "/static/js/453.41811d64.chunk.js",
+    "main.js": "/static/js/main.01fa24cc.js",
     "static/media/MDP1.png": "/static/media/MDP1.e17cc30f65a77ff28ed3.png",
     "static/media/goodpic.jpg": "/static/media/goodpic.fb7b2e752511786e89c4.jpg",
-    "static/media/urlShortener.png": "/static/media/urlShortener.13a0d5d2c67c81a5c97b.png",
     "static/media/Notebook.png": "/static/media/Notebook.262c57f954940be312a9.png",
     "static/media/Canvas.png": "/static/media/Canvas.727e1e5fda1a7ace7465.png",
-    "static/media/Bankist.jpeg": "/static/media/Bankist.7957967811a479c5370a.jpeg",
-    "static/media/RestCountries.jpeg": "/static/media/RestCountries.24c4bad7db2b5553e71f.jpeg",
     "static/media/github-pink.svg": "/static/media/github-pink.6d6b236c46deaa0a3f461d20ed5eb5c5.svg",
     "index.html": "/index.html",
     "static/media/email-pink.svg": "/static/media/email-pink.5d66966223a44815a8cbfd4404a4e134.svg",
     "static/media/linkedin-pink.svg": "/static/media/linkedin-pink.12f280e96c048911f733109fbce342fe.svg",
     "main.ad2572f6.css.map": "/static/css/main.ad2572f6.css.map",
-    "main.c995d3e7.js.map": "/static/js/main.c995d3e7.js.map",
-    "453.41811d64.chunk.js.map": "/static/js/453.41811d64.chunk.js.map"
+    "main.01fa24cc.js.map": "/static/js/main.01fa24cc.js.map"
   },
   "entrypoints": [
     "static/css/main.ad2572f6.css",
-    "static/js/main.c995d3e7.js"
+    "static/js/main.01fa24cc.js"
   ]
 }

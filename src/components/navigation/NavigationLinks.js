@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import ScrollToTop from "../../helpers/ScrollToTop";
 
 const foreignLetters = '人性कद喜स的টশहण能一मমর痛ণনভ重ज是性情同शनतप二生部বস惊自类দচভ人苦可রতপখকজवयখধ由活分的性';
