@@ -103,6 +103,18 @@ const NavigationLinks = (props) => {
         About
       </NavigationLink>
 
+      <a
+        href="https://substack.com/@arghyas"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="gray-text navigation__link"
+        onClick={() => {
+          props.closeMenu();
+        }}
+      >
+        Blog
+      </a>
+
       <NavigationLink
         to="/portfolio"
         className={activeNavLink}

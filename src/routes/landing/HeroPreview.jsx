@@ -1,12 +1,41 @@
-import React,  { useState, useEffect } from 'react';
+import React,  { useState, useEffect, useMemo } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import { prepare, layout, prepareWithSegments, measureLineStats } from '@chenglou/pretext';
 import CollapsibleText from "./CollapsibleText.jsx";
 // import FadeInText from './FadeInText.jsx';
-
 import img from "../../assets/images/goodpic.jpg";
+
+const greetingSequence = ['Hi', 'নমস্কার', 'नमस्ते', '你好'];
+const nameSequence = ['Arghya', 'অর্ঘ্য', 'अर्घ्य', '奥锐'];
+const HEADING_FONT = '700 56px Inter';
+const HEADING_MAX_WIDTH = 361;
+const HEADING_LINE_HEIGHT = 88;
 
 const HeroPreview = () => {
   const [showSecondPara, setShowSecondPara] = useState(false);
+  const [greetingIndex, setGreetingIndex] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window === "undefined" ? HEADING_MAX_WIDTH : window.innerWidth
+  );
+  const headingWrapWidth = useMemo(() => {
+    const horizontalPadding = viewportWidth >= 576 ? 96 : 48;
+    return Math.min(HEADING_MAX_WIDTH, Math.max(220, viewportWidth - horizontalPadding));
+  }, [viewportWidth]);
+  const headingMinHeight = useMemo(() => {
+    const heights = greetingSequence.map((greeting) => {
+      const prepared = prepare(`${greeting}, I am`, HEADING_FONT);
+      const { height } = layout(prepared, headingWrapWidth, HEADING_LINE_HEIGHT);
+      return height;
+    });
+    return Math.max(...heights);
+  }, [headingWrapWidth]);
+  const nameMinWidth = useMemo(() => {
+    const maxWidth = Math.max(...nameSequence.map((name) => {
+      const prepared = prepareWithSegments(name, HEADING_FONT);
+      return measureLineStats(prepared, 2000).maxLineWidth;
+    }));
+    return Math.ceil(maxWidth);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -14,6 +43,18 @@ const HeroPreview = () => {
     }, 18*150);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setGreetingIndex((prev) => (prev + 1) % greetingSequence.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   const firstpara = {
@@ -94,8 +135,17 @@ const secondpara = {
   return (
     <article className="landing__hero">
       <div className="hero-content">
-        <h1 className="hero-font white-text">
-          Hi, I am <em className="pink-text">
+        <h1
+          className="hero-font white-text"
+          style={{
+            minHeight: `${headingMinHeight}px`,
+            maxWidth: `${headingWrapWidth}px`,
+            whiteSpace: 'normal',
+            fontSize: '56px',
+            lineHeight: 1.1
+          }}
+        >
+          {greetingSequence[greetingIndex]}, I am <em className="pink-text">
             <TypeAnimation
               sequence={[
                 'Arghya',
@@ -111,7 +161,9 @@ const secondpara = {
               speed={50}
               style={{ 
                 display: 'inline-block',
-                minWidth: '120px'
+                minWidth: `${nameMinWidth}px`,
+                transform: 'scale(1.2)',
+                transformOrigin: 'left center'
               }}
               repeat={Infinity}
             />
@@ -131,7 +183,6 @@ const secondpara = {
       <div className="hero-image">
         <img src={img} alt="Arghya" />
       </div>
-      
     </article>
   );
 };

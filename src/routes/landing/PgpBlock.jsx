@@ -4,7 +4,10 @@ import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 
 const PgpBlock = () => {
-  const [copied, setCopied] = useState(false);
+  const [copiedAge, setCopiedAge] = useState(false);
+  const [copiedPgp, setCopiedPgp] = useState(false);
+
+  const agePublicKey = 'age19ftjfta6cx2dyjd20lv0kc8y28qyu6yu2sdz9s5y8cl8nqa5duvqxk56rs';
 
   const pgpkey = `-----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -28,32 +31,73 @@ GHP4tXFN8i99zmAbU707yzip7PwLlhlKfSE7GB8IeUh473OLXvQ6FUthbtGWkQjA
 =+3KQ
 -----END PGP PUBLIC KEY BLOCK-----
 `
-const copyToClipboard = () => {
-  navigator.clipboard.writeText(pgpkey);
-  setCopied(true);
-  setTimeout(() => setCopied(false), 2000);
-};
+  const copyAgeToClipboard = () => {
+    navigator.clipboard.writeText(agePublicKey);
+    setCopiedAge(true);
+    setTimeout(() => setCopiedAge(false), 2000);
+  };
+
+  const copyPgpToClipboard = () => {
+    navigator.clipboard.writeText(pgpkey);
+    setCopiedPgp(true);
+    setTimeout(() => setCopiedPgp(false), 2000);
+  };
 
 
   return (
-    <div className="fancy-code">
-      <div className="fancy-code__header">
-        <span className="fancy-code__language">{'PGP'}</span>
-        <button className="fancy-code__copy" onClick={copyToClipboard}>
-          {copied ? 'Copied!' : 'Copy'}
-        </button>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 1.5rem', boxSizing: 'border-box' }}>
+      <div className="fancy-code" style={{ width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
+        <div className="fancy-code__header">
+          <a
+            className="fancy-code__language"
+            href="https://github.com/filosottile/age"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: '#fff', textDecoration: 'none' }}
+          >
+            {'Age Key'}
+          </a>
+          <button className="fancy-code__copy" onClick={copyAgeToClipboard}>
+            {copiedAge ? 'Copied!' : 'Copy'}
+          </button>
+        </div>
+        <SyntaxHighlighter
+          language={"text"}
+          style={atomDark}
+          customStyle={{
+            margin: 0,
+            borderRadius: '0 0 4px 4px',
+            padding: '1rem',
+          }}
+        >
+          {agePublicKey}
+        </SyntaxHighlighter>
       </div>
-      <SyntaxHighlighter
-        language={"text"}
-        style={atomDark}
-        customStyle={{
-          margin: 0,
-          borderRadius: '0 0 4px 4px',
-          padding: '1rem',
-        }}
-      >
-        {pgpkey || 'Loading key...'}
-      </SyntaxHighlighter>
+
+      <details style={{ width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
+        <summary className="white-text p-tag" style={{ cursor: 'pointer', marginBottom: '0.5rem' }}>
+          Show PGP key
+        </summary>
+        <div className="fancy-code">
+          <div className="fancy-code__header">
+            <span className="fancy-code__language">{'PGP'}</span>
+            <button className="fancy-code__copy" onClick={copyPgpToClipboard}>
+              {copiedPgp ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+          <SyntaxHighlighter
+            language={"text"}
+            style={atomDark}
+            customStyle={{
+              margin: 0,
+              borderRadius: '0 0 4px 4px',
+              padding: '1rem',
+            }}
+          >
+            {pgpkey || 'Loading key...'}
+          </SyntaxHighlighter>
+        </div>
+      </details>
     </div>
   );
 };
