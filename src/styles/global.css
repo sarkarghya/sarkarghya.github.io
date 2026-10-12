@@ -1,0 +1,380 @@
+/*
+ * Type: Fraunces (variable) for reading, Recursive (variable) for the little bits.
+ * Both are nudged toward "friendly" through their variation axes:
+ *   Fraunces  SOFT 100 rounds off the serifs and terminals, WONK 1 lets the
+ *             quirky leaning letterforms through (used on the name + italics).
+ *   Recursive CASL 1 switches to the casual, brush-like letterforms; MONO 1
+ *             for the key so it still lines up like code.
+ */
+
+:root {
+  --bg: #fbf7f0;
+  --text: #2b2723;
+  --muted: #7a7067;
+  --rule: #e7dfd3;
+  --accent: #c4552d;
+  --code-bg: #f3ece1;
+  --selection: #f6d9c8;
+
+  --serif: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --casual: "Recursive Variable", ui-sans-serif, system-ui, sans-serif;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #1b1916;
+  --text: #ece5da;
+  --muted: #a1978b;
+  --rule: #34302a;
+  --accent: #ef9a72;
+  --code-bg: #24211d;
+  --selection: #5a3a2b;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  font-weight: 380;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "WONK" 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+main {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: clamp(4rem, 14vh, 8rem) 1.25rem 5rem;
+}
+
+/* ---------- type ---------- */
+
+h1 {
+  margin: 0 0 1.75rem;
+  font-size: clamp(2.75rem, 9vw, 3.75rem);
+  line-height: 1.02;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+}
+
+h2 {
+  margin: 3.5rem 0 1rem;
+  font-family: var(--casual);
+  font-size: 0.8125rem;
+  font-weight: 560;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: var(--muted);
+  font-variation-settings: "CASL" 1, "MONO" 0, "slnt" 0;
+}
+
+p {
+  margin: 0 0 1.1rem;
+}
+
+em,
+i {
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  text-decoration-thickness: 0.09em;
+  text-underline-offset: 0.2em;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.links {
+  font-family: var(--casual);
+  font-size: 0.9375rem;
+  font-variation-settings: "CASL" 1, "MONO" 0, "slnt" 0;
+  color: var(--muted);
+}
+
+.links a {
+  color: var(--text);
+}
+
+/* ---------- key ---------- */
+
+.key {
+  position: relative;
+  margin: 0;
+  padding: 0.9rem 4.5rem 0.9rem 1rem;
+  background: var(--code-bg);
+  border-radius: 12px;
+  font-family: var(--casual);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-variation-settings: "CASL" 1, "MONO" 1, "slnt" 0;
+  overflow-wrap: anywhere;
+}
+
+.copy {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  transform: translateY(-50%);
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-variation-settings: "CASL" 1, "MONO" 0, "slnt" 0;
+  cursor: pointer;
+}
+
+.copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.small {
+  margin-top: 0.6rem;
+  font-family: var(--casual);
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variation-settings: "CASL" 1, "MONO" 0, "slnt" 0;
+}
+
+/* ---------- writing list ---------- */
+
+.posts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.posts li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.35rem 0;
+}
+
+.posts time {
+  flex: none;
+  width: 6.5rem;
+  font-family: var(--casual);
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variation-settings: "CASL" 1, "MONO" 1, "slnt" 0;
+}
+
+.posts a {
+  text-decoration: none;
+}
+
+.posts a:hover {
+  text-decoration: underline;
+}
+
+.empty {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- a single post ---------- */
+
+.back {
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  font-family: var(--casual);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-variation-settings: "CASL" 1, "MONO" 0, "slnt" 0;
+}
+
+.post-title {
+  margin-bottom: 0.5rem;
+  font-size: clamp(2.1rem, 7vw, 2.75rem);
+}
+
+.post-date {
+  display: block;
+  margin-bottom: 2.5rem;
+  font-family: var(--casual);
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variation-settings: "CASL" 1, "MONO" 1, "slnt" 0;
+}
+
+.prose h2 {
+  margin: 2.5rem 0 0.75rem;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--text);
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+.prose h3 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 560;
+}
+
+.prose blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1.1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose code {
+  padding: 0.1em 0.35em;
+  background: var(--code-bg);
+  border-radius: 6px;
+  font-family: var(--casual);
+  font-size: 0.85em;
+  font-variation-settings: "CASL" 1, "MONO" 1, "slnt" 0;
+}
+
+.prose pre {
+  padding: 1rem;
+  overflow-x: auto;
+  background: var(--code-bg) !important;
+  border-radius: 12px;
+  font-size: 0.875rem;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.prose hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- theme toggle ---------- */
+
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  background: var(--code-bg);
+  transform: rotate(-15deg);
+}
+
+.theme-toggle svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:root[data-theme="dark"] .icon-moon,
+:root:not([data-theme="dark"]) .icon-sun {
+  display: none;
+}
+
+footer {
+  margin-top: 4.5rem;
+  font-family: var(--casual);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variation-settings: "CASL" 1, "MONO" 0, "slnt" 0;
+}
+
+/* ---------- the scene at the bottom ---------- */
+
+.scene {
+  margin-top: 7rem;
+}
+
+/* ---------- the stepwell (src/components/Stepwell.astro, not on a page right now) ---------- */
+
+.stepwell {
+  margin: 7rem 0 0;
+  container-type: inline-size;
+}
+
+.stepwell pre {
+  margin: 0;
+  overflow: hidden;
+  /* 96 columns of 0.6em-wide characters, exactly the width of the text */
+  font-family: var(--casual);
+  font-size: calc(100cqw / 57.6);
+  font-variation-settings: "MONO" 1, "CASL" 1, "slnt" 0;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+  user-select: none;
+  background: linear-gradient(#050b20 0%, #0d1a3d 12%, #1a2650 21%, #2a1c16 24%, #1d120c 50%, #1b110b 71%, #0b1226 76%, #060a16 100%);
+}

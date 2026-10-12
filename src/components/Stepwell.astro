@@ -1,0 +1,59 @@
+---
+import { PALETTE, frame, toLines } from "../art/stepwell";
+
+// One class per colour in the palette; lamps, the moon and the lit arches also
+// get a glow.
+const css = PALETTE.map(({ color, glow }, i) => {
+  const shadow = glow ? `;text-shadow:0 0 .3em ${glow},0 0 .9em ${glow}99` : "";
+  return `.stepwell .c${i}{color:${color}${shadow}}`;
+}).join("");
+
+// The first frame is drawn here at build time, so the picture is whole before
+// any script runs; the script below then brings it to life.
+const rows = toLines(frame(0))
+  .map((line) => `<span>${line}</span>`)
+  .join("\n");
+---
+
+<div class="stepwell">
+  <pre aria-hidden="true" set:html={rows} />
+</div>
+<style is:inline set:html={css}></style>
+
+<script>
+  const pre = document.querySelector<HTMLPreElement>(".stepwell pre");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (pre && !still) {
+    const rows = Array.from(pre.children) as HTMLElement[];
+    const shown = rows.map((row) => row.innerHTML);
+    let art: typeof import("../art/stepwell") | undefined;
+    let visible = false;
+    let last = 0;
+    const start = performance.now();
+
+    // Ten frames a second is plenty for flames and water, and only rows that
+    // actually changed are touched.
+    const tick = (now: number) => {
+      if (!visible || !art) return;
+      requestAnimationFrame(tick);
+      if (now - last < 100) return;
+      last = now;
+      const lines = art.toLines(art.frame((now - start) / 1000));
+      for (let y = 0; y < lines.length; y++) {
+        if (lines[y] === shown[y]) continue;
+        rows[y].innerHTML = lines[y];
+        shown[y] = lines[y];
+      }
+    };
+
+    // Only load and run the animation while it's on screen.
+    new IntersectionObserver(async ([entry]) => {
+      const wasVisible = visible;
+      visible = entry.isIntersecting;
+      if (!visible || wasVisible) return;
+      art ??= await import("../art/stepwell");
+      requestAnimationFrame(tick);
+    }).observe(pre);
+  }
+</script>

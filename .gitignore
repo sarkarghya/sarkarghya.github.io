@@ -1,5 +1,7 @@
 node_modules
 dist
+.astro
+.alchemy
 
 # wrangler files
 .wrangler
@@ -7,3 +9,5 @@ dist
 !.dev.vars.example
 .env*
 !.env.example
+
+.DS_Store

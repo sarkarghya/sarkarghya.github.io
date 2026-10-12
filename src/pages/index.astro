@@ -1,0 +1,92 @@
+---
+import Ascii from "ascii.rest/astro";
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const AGE_KEY = "age19ftjfta6cx2dyjd20lv0kc8y28qyu6yu2sdz9s5y8cl8nqa5duvqxk56rs";
+
+const posts = (await getCollection("writing", ({ data }) => import.meta.env.DEV || !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+---
+
+<Base
+  title="Arghya Sarkar"
+  description="Arghya Sarkar is the CEO of Orvelt, working on protecting truth on the internet."
+>
+  <h1>Arghya Sarkar</h1>
+
+  <p>
+    Hi there, I'm Arghya. I'm the CEO of <a href="https://orvelt.com">Orvelt</a>, where we're
+    working to protect truth on the internet by helping people check what's <em>real</em> without
+    having to give up their privacy.
+  </p>
+
+  <p>
+    Before Orvelt, I studied Computer Science (with a minor in Cybersecurity) at NYU. These days I'm
+    based in New York, and when I'm not at my desk you'll probably find me on a long walk by the Hudson
+    or trying out a new vegetarian recipe.
+  </p>
+
+  <p>
+    I think a lot about how to make sure AI ends up strengthening democracy rather than concentrating
+    power. If you do too, I'd love to hear from you.
+  </p>
+
+  <p class="links">
+    <a href="mailto:as@orvelt.com">Email</a> &middot;
+    <a href="https://github.com/sarkarghya">GitHub</a> &middot;
+    <a href="https://www.linkedin.com/in/sarkarghya/">LinkedIn</a> &middot;
+    <a href="https://orvelt.com">Orvelt</a>
+  </p>
+
+  <h2>Writing</h2>
+  {
+    posts.length > 0 ? (
+      <ul class="posts">
+        {posts.map((post) => (
+          <li>
+            <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+            <a href={`/writing/${post.id}/`}>{post.data.title}</a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="empty">Nothing here just yet. The first post is on its way.</p>
+    )
+  }
+
+  <h2>Public key</h2>
+  <p class="key">
+    <span id="age-key">{AGE_KEY}</span>
+    <button class="copy" type="button" data-copy="age-key">Copy</button>
+  </p>
+  <p class="small">
+    That's my <a href="https://github.com/FiloSottile/age">age</a> key. Prefer PGP? Here's
+    <a href="/pgp.txt">my PGP key</a>.
+  </p>
+
+  <footer>
+    The older version of this site still lives at <a href="https://v1.arghyasarkar.com">v1.arghyasarkar.com</a>.
+  </footer>
+
+  <Ascii piece="lantern-lake" class="scene" />
+
+  <script is:inline>
+    for (const button of document.querySelectorAll("[data-copy]")) {
+      button.addEventListener("click", async () => {
+        const text = document.getElementById(button.dataset.copy).textContent.trim();
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = "Copied!";
+        } catch {
+          button.textContent = "Couldn't copy";
+        }
+        setTimeout(() => (button.textContent = "Copy"), 1800);
+      });
+    }
+  </script>
+</Base>
